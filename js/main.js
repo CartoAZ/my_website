@@ -14,31 +14,34 @@ function cities(){
 
     var cityPop = [
         {
-            city: 'Madison',
-            population: '23309'
+            city: 'Portland',
+            population: 609456
         },
         {
-            city: 'Milwaukee',
-            population: 594833
+            city: 'Salem',
+            population: 160614
         },
         {
-            city: 'Green Bay',
-            population: 104057
+            city: 'Eugene',
+            population: 159190
         },
         {
-            city: 'Superior',
-            population: 27244
+            city: 'Gresham',
+            population: 109397
         }
     ];
 
     //append the able elements to the div
     $('#mydiv').append('<table>');
 
-    //appends a header row to the table
+    //appends a table header to the table for the title
+    $('table').append('<th colspan="2">Most Populous Cities in Oregon 2013</th>');
+
+    //appends a header row for column names
     $('table').append('<tr>');
 
     //adds the 'City' and 'Population' columns to the header row
-    $('tr').append('<th>City</th><th>Population</th>');
+    $('tr').append('<th class = "colHeader">City</th><th class = "colHeader">Population</th>');
 
     //loop to add a new row for each City
     for (var i = 0; i < cityPop.length; i++){
