@@ -6,8 +6,7 @@ mydiv.innerHTML = "Hello World"; */
 //   1) Do I need to define cityPop globally?
 //   2) Not sure why the citySize is "undefined" for 2-4 cities
 //     - I thought we could reassign the variable using.each
-//   3) Is my table text supposed to change colors, or is console.logging that it
-//       does good enough?
+//
 //   4) Is it okay that i switched from '#table' to 'table' since there is only 1
 //     table on this webpage?
 
@@ -103,7 +102,7 @@ function addColumns(){
     			citySize = 'Small';
 
     		} else if (cityPop[i-1].population < 500000){
-    			citysize = 'Medium';
+    			citySize = 'Medium';
 
     		} else {
     			citySize = 'Large';
@@ -118,7 +117,7 @@ function addColumns(){
 //function to randomly generate an RGB text color for 'table' elements
 function addEvents(){
 
-  //the function to choose 3 values for RGB is initiated when you mose over the table
+  //the function to choose 3 values for RGB is initiated when you mouse over the table
 	$('table').mouseover(function(){
 
 		var color = "rgb(";
@@ -135,12 +134,12 @@ function addEvents(){
 
 			} else {
 				color += ")";
-		};
+		  };
+    };
 
-    //adds 'color' property and RGB value to the 'table' element in the .css file
-		$(this).css('color:', color);
-  };
-});
+    //adds 'color' property and RGB value to the 'table' element
+		$("table").css('color', color);
+  });
 };
 
   //function that creates popup when you click on table
