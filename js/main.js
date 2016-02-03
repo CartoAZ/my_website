@@ -7,10 +7,11 @@ function initialize(){
     addColumns();
     addEvents();
     clickMe();
+    jsAjax();
 };
 
 //creates array globally to be used in multiple functions
-var cityPop
+var cityPop;
 
 //function to create array of city objects, create table, and populate table with cities/populations
 function cities(){
@@ -130,6 +131,35 @@ function addEvents(){
 	});
 };
 
+function jsAjax(){
+  //Step 1: Create the request
+  var ajaxRequest = new XMLHttpRequest();
+
+  //Step 2: Create an event handler to send received data to a callback function
+  ajaxRequest.onreadystatechange = function(){
+      if (ajaxRequest.readyState === 4){
+          callback(ajaxRequest.response);
+      };
+  };
+
+  //Step 3: Open the server connection
+  ajaxRequest.open('GET', 'data/MegaCities.geojson', true)
+
+  //step 4: Set the response data type
+  ajaxRequest.responseType = "json";
+
+  //step 5: sent the request
+  ajaxRequest.send();
+
+};
+
+//define callback function
+function callback(response){
+  //tasks using the data go here
+  console.log(response);
+};
+
+window.onload = jsAjax();
 
 //call the initialize function when the window has loaded
 $(document).ready(initialize);
