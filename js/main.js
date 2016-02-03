@@ -7,7 +7,8 @@ function initialize(){
     addColumns();
     addEvents();
     clickMe();
-    jsAjax();
+    //jsAjax();
+    jQueryAjax();
 };
 
 //creates array globally to be used in multiple functions
@@ -130,36 +131,60 @@ function addEvents(){
 		    alert('Hey, you clicked me!');
 	});
 };
+//**** how AJAX works using native javascript
+// function jsAjax(){
+//   //Step 1: Create the request
+//   var ajaxRequest = new XMLHttpRequest();
+//
+//   //Step 2: Create an event handler to send received data to a callback function
+//   ajaxRequest.onreadystatechange = function(){
+//       if (ajaxRequest.readyState === 4){
+//           callback(ajaxRequest.response);
+//       };
+//   };
+//
+//   //Step 3: Open the server connection
+//   ajaxRequest.open('GET', 'data/Madison.geojson', true)
+//
+//   //step 4: Set the response data type
+//   ajaxRequest.responseType = "json";
+//
+//   //step 5: sent the request
+//   ajaxRequest.send();
+//
+// };
+//
+// //define callback function
+// function callback(response){
+//   //tasks using the data go here
+//   console.log(response);
+// };
+//
+// window.onload = jsAjax();
 
-function jsAjax(){
-  //Step 1: Create the request
-  var ajaxRequest = new XMLHttpRequest();
 
-  //Step 2: Create an event handler to send received data to a callback function
-  ajaxRequest.onreadystatechange = function(){
-      if (ajaxRequest.readyState === 4){
-          callback(ajaxRequest.response);
-      };
-  };
+//***one way to use Ajax with jQuery
+//define AJAX function
+function jQueryAjax(){
+    //basic jQuery ajax method
+    $.ajax("data/Madison.geojson", {
+        dataType: "json",
+        success: callback
+    });
 
-  //Step 3: Open the server connection
-  ajaxRequest.open('GET', 'data/MegaCities.geojson', true)
-
-  //step 4: Set the response data type
-  ajaxRequest.responseType = "json";
-
-  //step 5: sent the request
-  ajaxRequest.send();
-
+    //jQuery AJAX alias method
+//     $.get("data/Madison.geojson", callback, "json");
 };
 
+    // console.log(response);
 //define callback function
-function callback(response){
-  //tasks using the data go here
-  console.log(response);
+function callback(response, status, jqXHRobject){
+    //tasks using the data go here
+    console.log(response);
 };
 
-window.onload = jsAjax();
+//this makes sure our function (jQueryAjax) will not run until the document, i.e. the DOM, is ready
+$(document).ready(jQueryAjax);
 
 //call the initialize function when the window has loaded
 $(document).ready(initialize);
