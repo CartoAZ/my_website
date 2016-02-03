@@ -1,17 +1,7 @@
-/* Alex Zarley, 2016
-var mydiv = document.getElementById("mydiv");
-mydiv.innerHTML = "Hello World"; */
-
-//questions:
-//   1) Do I need to define cityPop globally?
-//   2) Not sure why the citySize is "undefined" for 2-4 cities
-//     - I thought we could reassign the variable using.each
-//
-//   4) Is it okay that i switched from '#table' to 'table' since there is only 1
-//     table on this webpage?
+/* Alex Zarley, 2016*/
 
 
-//initialize function called when script loads
+//initialize functions called when script loads
 function initialize(){
     cities();
     addColumns();
@@ -19,49 +9,33 @@ function initialize(){
     clickMe();
 };
 
-//defines an array containing an object for each city with properties for the cities name and population
-var cityPop = [
-    {
-        city: 'Portland',
-        population: 609456
-    },
-    {
-        city: 'Salem',
-        population: 160614
-    },
-    {
-        city: 'Eugene',
-        population: 159190
-    },
-    {
-        city: 'Gresham',
-        population: 109397
-    }
-];
-//function to create array of city objects
+//creates array globally to be used in multiple functions
+var cityPop
+
+//function to create array of city objects, create table, and populate table with cities/populations
 function cities(){
 
-    // //defines an array containing an object for each city with properties for the cities name and population
-    // var cityPop = [
-    //     {
-    //         city: 'Portland',
-    //         population: 609456
-    //     },
-    //     {
-    //         city: 'Salem',
-    //         population: 160614
-    //     },
-    //     {
-    //         city: 'Eugene',
-    //         population: 159190
-    //     },
-    //     {
-    //         city: 'Gresham',
-    //         population: 109397
-    //     }
-    // ];
+    // //defines array containing an object for each city with properties for the city's name and population
+    cityPop = [
+        {
+            city: 'Portland',
+            population: 609456
+        },
+        {
+            city: 'Salem',
+            population: 160614
+        },
+        {
+            city: 'Eugene',
+            population: 159190
+        },
+        {
+            city: 'Gresham',
+            population: 109397
+        }
+    ];
 
-    //append the able elements to the div
+    //append the tble elements to the div
     $('#mydiv').append('<table>');
 
     //appends a table header to the table for the title
@@ -75,12 +49,12 @@ function cities(){
 
     //loop to add a new row for each City
     for (var i = 0; i < cityPop.length; i++){
-        //assign longer html strings to a variable
+        //assigns html string to a variable for ease of reading
         var rowHtml = '<tr><td>' + cityPop[i].city + '</td><td>' + cityPop[i].population + '</td></tr>';
         //add the row's HTML string to the table
         $('table').append(rowHtml);
     };
-};
+}
 
 //function to loop over each city's population, categorize its size, and add a column to display that size
 function addColumns(){
@@ -88,16 +62,17 @@ function addColumns(){
     //looks at each 'tr' element on page
     $('tr').each(function(i){
 
-      //creates column header for city size
+      //creates column header for city size on first pass
     	if (i == 0){
 
     		$(this).append('<th>City Size</th>');
 
-      //sets citySize variable based on population of city in array
+      //for 2nd-4th pass creates and sets citySize variable based on population of city in array for each city
     	} else {
-        //don't know why this variable isn't getting reset?
+
     		var citySize;
 
+        //i-1 because cityPop array index starts at 0, but .each function creates header when i==0
     		if (cityPop[i-1].population < 100000){
     			citySize = 'Small';
 
@@ -108,11 +83,11 @@ function addColumns(){
     			citySize = 'Large';
     		};
 
-        //appends cell to current 'tr' and adds the citySize to
+        //appends cell to current 'tr' and adds the citySize to it
     		$(this).append('<td>' + citySize + '</td>');
-    	};
+      };
     });
-};
+  };
 
 //function to randomly generate an RGB text color for 'table' elements
 function addEvents(){
@@ -120,24 +95,29 @@ function addEvents(){
   //the function to choose 3 values for RGB is initiated when you mouse over the table
 	$('table').mouseover(function(){
 
+    //declares color variable with appropriate css format
 		var color = "rgb(";
 
-    //for loop that generates random numbers for color values and adds commas/parenthesis appropriately
+    //for loop that generates random numbers for RGB values and adds commas/parenthesis appropriately for css
 		for (var i=0; i<3; i++){
 
+      //randomly generates float between 0 and 1, multiplies by 255 and rounds to integer
 			var random = Math.round(Math.random() * 255);
 
+      //concatenates previous 'value' of color with value of 'random'
 			color += random;
 
+      //after first two loops, a comma is added each time
 			if (i<2){
 				color += ",";
 
+        //on third loop, ) is added to 'color' string
 			} else {
 				color += ")";
 		  };
     };
 
-    //adds 'color' property and RGB value to the 'table' element
+    //adds 'color' property and 'color' variable to the 'table' element for css styling
 		$("table").css('color', color);
   });
 };
