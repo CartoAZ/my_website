@@ -166,25 +166,37 @@ function addEvents(){
 //***one way to use Ajax with jQuery
 //define AJAX function
 function jQueryAjax(){
+
+    //define variable to hold response
+    var mydata;
+
     //basic jQuery ajax method
-    $.ajax("data/Madison.geojson", {
+    $.ajax("data/MegaCities.geojson", {
         dataType: "json",
-        success: callback
+        success: function(response){
+            mydata = response;
+
+            //this will work because it won't run until response is received
+            console.log(mydata);
+        }
     });
 
     //jQuery AJAX alias method
 //     $.get("data/Madison.geojson", callback, "json");
 };
+    //this will not work because mydata is not definied yet because code executes
+    //before the response has been received
+    console.log(mydata);
 
-    // console.log(response);
-//define callback function
-function callback(response, status, jqXHRobject){
-    //tasks using the data go here
-    console.log(response);
-};
+
+// //define callback function
+// function callback(response, status, jqXHRobject){
+//     //tasks using the data go here
+//     console.log(response);
+// };
 
 //this makes sure our function (jQueryAjax) will not run until the document, i.e. the DOM, is ready
-$(document).ready(jQueryAjax);
+// $(document).ready(jQueryAjax);
 
 //call the initialize function when the window has loaded
 $(document).ready(initialize);
