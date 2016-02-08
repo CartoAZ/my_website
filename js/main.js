@@ -1,4 +1,4 @@
-/* Alex Zarley, 2016*/
+/* Alex Zarley, 2016 */
 
 
 //initialize functions called when script loads
