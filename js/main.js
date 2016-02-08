@@ -166,21 +166,7 @@ function initialize(){
 
 //***one way to use Ajax with jQuery
 //define AJAX function
-// // function jQueryAjax(){
-// //
-// //     //define variable to hold response
-// //     var mydata;
-// //
-// //     //basic jQuery ajax method
-// //     $.ajax("data/MegaCities.geojson", {
-// //         dataType: "json",
-// //         success: function(response){
-// //             mydata = response;
-// //
-// //             //this will work because it won't run until response is received
-// //             console.log(mydata);
-// //         }
-// //     });
+
 //
 //     //jQuery AJAX alias method
 // //     $.get("data/Madison.geojson", callback, "json");
@@ -200,30 +186,35 @@ function initialize(){
 // $(document).ready(jQueryAjax);
 
 //function to add data from AJAX Callback function to '#mydiv' element on index.html
-function debugCallback(data){
+function debugCallback(response){
+
+  //this will be defined and print because this function is not called until dataType
+  //from AJAX query has been received
+  console.log(response);
 
   //converts data in callback return object into a string and adds string to mydiv
-	$('#mydiv').append('GeoJSON data: ' + JSON.stringify(data));
+	$('#mydiv').append('<br>GeoJSON data:</br>' + JSON.stringify(response));
 };
 
 //AJAX function to retrieve data from GeoJSON file
 function debugAjax(){
-
-//declares variable to hold callback response
-	var mydata;
 
 //jQuery AJAX method using an anonymous function
 	$.ajax("data/MegaCities.geojson", {
 		dataType: "json",
 		success: function(response){
 
-      //puts response object into mydata variables
-      mydata = response;
-
+      // var mydata = response;
       //call function from within callback function passing GeoJSON object as parameter
-			debugCallback(mydata);
+			debugCallback(response);
+
+      //this will be defined and print because this line of code is in anonymous
+      //callback function which will not be called until data from AJAX query has been received
+      console.log(response);
 		}
 	});
+      //this will be undefined because it will try to log to console before response has been received
+      console.log(response);
 };
 //call the initialize function when the window has loaded
 $(document).ready(initialize);
